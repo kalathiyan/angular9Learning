@@ -1,6 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BroadcasterService } from './global/application-broadcaster/application-broadcaster';
 import { Subscription } from 'rxjs';
+import { StorageService } from './common/storage-service';
+import { StorageKeys, RoutingKeys } from './common/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,26 +12,31 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnDestroy {
   title = 'Angular9Learning';
-  private subscriptions = new Subscription();
-  constructor(private broadcasterService: BroadcasterService) {
+  
+  constructor(
+    private broadcasterService: BroadcasterService,
+    private storageService: StorageService,
+    private router: Router) {
     this.subscribeBrodcaster();
     this.validateUser();
   }
 
-  validateUser(){
-
+  validateUser() {
+    debugger
+    this.storageService.local.clearAll();
+    if (!this.storageService.local.keyExists(StorageKeys.Auth)) {
+      this.router.navigate([RoutingKeys.Login]);
+    }
   }
 
 
   subscribeBrodcaster() {
-    debugger
-    this.subscriptions.add(this.broadcasterService.loginObserver.subscribe((isLoggedIn: boolean) => {
+    this.broadcasterService.loginObserver.subscribe((isLoggedIn: boolean) => {
       debugger;
-    }));
+
+    });
   }
 
   ngOnDestroy(): void {
-    debugger
-    this.subscriptions.unsubscribe();
   }
 }

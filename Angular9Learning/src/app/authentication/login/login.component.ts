@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorage } from '@ngx-pwa/local-storage';
+import { StorageKeys } from 'src/app/common/constants';
+import { StorageService } from 'src/app/common/storage-service';
 import { BroadcasterService } from 'src/app/global/application-broadcaster/application-broadcaster';
 
 @Component({
@@ -11,22 +12,14 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private broadcasterService: BroadcasterService,
-    private localStorage: LocalStorage) {
+    private storageService: StorageService) {
   }
 
   ngOnInit(): void {
   }
 
   loginToSystem() {
-    debugger
-    let m = this.localStorage.setItem('auth', true).subscribe((msg) => {
-      debugger
-     let data = this.localStorage.getItem('auth').subscribe((val) => {
-        debugger
-      })
-    }, (err) => {
-      debugger
-    });
+    this.storageService.local.setItem(StorageKeys.Auth, true);
   }
 
 }
