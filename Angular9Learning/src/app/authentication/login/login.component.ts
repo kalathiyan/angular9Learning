@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   loginToSystem() {
     this.storageService.local.setItem(StorageKeys.Auth, true);
+    this.broadcasterService.broadcastLogin(true);
   }
 
 }

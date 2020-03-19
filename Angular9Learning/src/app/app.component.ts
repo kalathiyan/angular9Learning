@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnDestroy {
   title = 'Angular9Learning';
-  
+  isLoggedIn = false;
   constructor(
     private broadcasterService: BroadcasterService,
     private storageService: StorageService,
@@ -22,18 +22,17 @@ export class AppComponent implements OnDestroy {
   }
 
   validateUser() {
-    debugger
-    this.storageService.local.clearAll();
     if (!this.storageService.local.keyExists(StorageKeys.Auth)) {
       this.router.navigate([RoutingKeys.Login]);
+    } else {
+      this.isLoggedIn = true;
+      this.router.navigate([RoutingKeys.Dashboard]);
     }
   }
 
-
   subscribeBrodcaster() {
     this.broadcasterService.loginObserver.subscribe((isLoggedIn: boolean) => {
-      debugger;
-
+      this.validateUser();
     });
   }
 

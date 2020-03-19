@@ -20,18 +20,18 @@ export class LocalStorage implements IStorageService {
     }
     clearAll() {
         if (localStorage.length !== 0) {
-            let keys = [];
-            for (let key in localStorage){
+            const keys = [];
+            for (let key in localStorage) {
                 keys.push(key);
-            } 
-            for(let i=0;i<=keys.length;i++){
+            }
+            for (let i = 0; i <= keys.length; i++) {
                 localStorage.removeItem(keys[i]);
             }
         }
     }
 
     setItem(key: string, value: any) {
-        if (typeof(value) === 'object' && value !== undefined && value !== null) {
+        if (typeof (value) === 'object' && value !== undefined && value !== null) {
             value = JSON.stringify(value);
         }
         localStorage.setItem(key, value);
@@ -44,19 +44,19 @@ export class LocalStorage implements IStorageService {
     }
     keyExists(key: string): boolean {
 
-    if (localStorage.length === 0) {
-        return false;
-    }
-    let isExists = false;
-    for (let i = 0; i <= localStorage.length; i++) {
-        if (localStorage.key(i) === key) {
-            isExists = true;
+        if (localStorage.length === 0) {
+            return false;
         }
-        if (isExists) {
-            break;
+        let isExists = false;
+        for (let i = 0; i <= localStorage.length; i++) {
+            if (localStorage.key(i) === key) {
+                isExists = true;
+            }
+            if (isExists) {
+                break;
+            }
         }
-    }
-    return isExists;
+        return isExists;
     }
 
     valueExists(key: string): boolean {
@@ -66,7 +66,7 @@ export class LocalStorage implements IStorageService {
 }
 
 export class SessionStorage implements IStorageService {
-    
+
     clear(key: any) {
         sessionStorage.removeItem(key);
     }
@@ -76,7 +76,7 @@ export class SessionStorage implements IStorageService {
             let keys = [];
             for (const key in sessionStorage) {
                 keys.push(key);
-            } 
+            }
             for (let i = 0; i <= keys.length; i++) {
                 sessionStorage.removeItem(keys[i]);
             }
@@ -84,7 +84,7 @@ export class SessionStorage implements IStorageService {
     }
 
     setItem(key: string, value: any) {
-        if (typeof(value) === 'object' && value !== undefined && value !== null) {
+        if (typeof (value) === 'object' && value !== undefined && value !== null) {
             value = JSON.stringify(value);
         }
         sessionStorage.setItem(key, value);
